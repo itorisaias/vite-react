@@ -1,7 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
-import { zodResolver } from '@hookform/resolvers/zod'
+import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser, login } from "./services";
 
 enum GenderEnum {
@@ -13,20 +13,27 @@ enum GenderEnum {
 const inputSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  age: z.number(),
-  gender: z.nativeEnum(GenderEnum)
-})
+  age: z.string(),
+  gender: z.nativeEnum(GenderEnum),
+});
 
 type Inputs = z.infer<typeof inputSchema>;
 
 function App() {
-  const queryClient = useQueryClient()
-  const query = useQuery<{ username: string }>('user', getUser)
+  // React Query
+  const queryClient = useQueryClient();
+  const query = useQuery<{ username: string }>("user", getUser);
   const mutation = useMutation(login, {
     onSuccess: () => {
-      queryClient.invalidateQueries('user')
+      console.log("foi o form");
+      queryClient.invalidateQueries("user");
     },
-  })
+    onError: (error) => {
+      console.log({ error });
+    },
+  });
+
+  // React Hook Form + Zod
   const {
     register,
     handleSubmit,
@@ -37,14 +44,16 @@ function App() {
       gender: GenderEnum.other,
     },
   });
+
+  // React Hook Form + React Query
   const onSubmit: SubmitHandler<Inputs> = (input) => mutation.mutate(input);
 
   if (query.isLoading) {
-    return <span>Loading...</span>
+    return <span>Loading query...</span>;
   }
 
   if (query.isError) {
-    return <span>Ops! Error</span>
+    return <span>Ops! Error query</span>;
   }
 
   return (
@@ -57,7 +66,7 @@ function App() {
           <input
             type="email"
             id="email"
-            {...register("email", { required: true })}
+            {...register("email")}
             aria-invalid={errors.email ? "true" : "false"}
           />
         </label>
@@ -68,7 +77,7 @@ function App() {
           <input
             type="password"
             id="password"
-            {...register("password", { required: true, minLength: 6 })}
+            {...register("password")}
             aria-invalid={errors.password ? "true" : "false"}
           />
         </label>
@@ -79,7 +88,7 @@ function App() {
           <input
             id="age"
             type="number"
-            {...register("age", { min: 18, max: 99 })}
+            {...register("age")}
             aria-invalid={errors.age ? "true" : "false"}
           />
         </label>

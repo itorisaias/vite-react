@@ -1,19 +1,9 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { PersonPinCircle } from "@styled-icons/material-outlined";
-import { ThemeProvider } from "styled-components";
-import theme from '~/styles/theme'
 import { Button } from ".";
 
 export default {
-  title: "Button",
   component: Button,
-  decorators: [
-    (StoryFn) => (
-        <ThemeProvider theme={theme}>
-            <StoryFn />
-        </ThemeProvider>
-    )
-  ]
 } as Meta<typeof Button>;
 
 const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
