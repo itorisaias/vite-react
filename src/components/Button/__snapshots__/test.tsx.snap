@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`<Button /> > should render the medium size by default 1`] = `
+<button
+  class="sc-bcXHqe bFNpZh"
+>
+  <span>
+    Buy now
+  </span>
+</button>
+`;
