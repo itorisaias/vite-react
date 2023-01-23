@@ -3,6 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser, login } from "./services";
+import { Button } from "./components/Button";
+import { TextField } from "./components/Input";
+import { toast } from "react-hot-toast";
 
 enum GenderEnum {
   female = "female",
@@ -21,15 +24,15 @@ type Inputs = z.infer<typeof inputSchema>;
 
 function App() {
   // React Query
-  const queryClient = useQueryClient();
-  const query = useQuery<{ username: string }>("user", getUser);
   const mutation = useMutation(login, {
-    onSuccess: () => {
-      console.log("foi o form");
-      queryClient.invalidateQueries("user");
+    onError(error: Error, _variables, _context) {
+      toast.error(`Something went wrong: ${error.message}`)
     },
-    onError: (error) => {
-      console.log({ error });
+    onSuccess(_data, _variables, _context) {
+      toast.success('Successfull')
+    },
+    onMutate(_variables) {
+      toast.remove()
     },
   });
 
@@ -42,59 +45,46 @@ function App() {
     resolver: zodResolver(inputSchema),
     defaultValues: {
       gender: GenderEnum.other,
+      email: 'itor.isaias@gmail.com',
+      age: '3',
+      password: '12345'
     },
   });
 
   // React Hook Form + React Query
   const onSubmit: SubmitHandler<Inputs> = (input) => mutation.mutate(input);
 
-  if (query.isLoading) {
-    return <span>Loading query...</span>;
-  }
-
-  if (query.isError) {
-    return <span>Ops! Error query</span>;
-  }
-
   return (
     <>
-      <h1>Username: {query.data?.username}</h1>
-
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">
-          E-mail
-          <input
-            type="email"
-            id="email"
-            {...register("email")}
-            aria-invalid={errors.email ? "true" : "false"}
-          />
-        </label>
-        {errors.email && <span>{errors.email?.message}</span>}
+        <TextField
+          label="E-mail"
+          labelFor="email"
+          id="email"
+          type="email"
+          error={errors.email?.message}
+          register={register}
+        />
 
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            id="password"
-            {...register("password")}
-            aria-invalid={errors.password ? "true" : "false"}
-          />
-        </label>
-        {errors.password && <span>{errors.password?.message}</span>}
+        <TextField
+          label="Senha"
+          labelFor="password"
+          id="password"
+          type="password"
+          error={errors.password?.message}
+          register={register}
+        />
 
-        <label htmlFor="age">
-          Age
-          <input
-            id="age"
-            type="number"
-            {...register("age")}
-            aria-invalid={errors.age ? "true" : "false"}
-          />
-        </label>
-        {errors.age && <span>{errors.age?.message}</span>}
+        <TextField
+          label="Idade"
+          labelFor="age"
+          id="age"
+          type="number"
+          error={errors.age?.message}
+          register={register}
+        />
 
-        <label htmlFor="gender">
+        {/* <label htmlFor="gender">
           Gender
           <select
             id="gender"
@@ -106,9 +96,9 @@ function App() {
             <option value="other">other</option>
           </select>
         </label>
-        {errors.gender && <span>{errors.gender?.message}</span>}
+        {errors.gender && <span>{errors.gender?.message}</span>} */}
 
-        <button type="submit">Entrar</button>
+        <Button type="submit">Entrar</Button>
       </form>
     </>
   );

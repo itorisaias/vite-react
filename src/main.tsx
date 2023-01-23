@@ -5,6 +5,7 @@ import App from "./App";
 import theme from "./styles/theme";
 import { worker } from "./mocks/browser";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Toaster } from "react-hot-toast";
 
 if (process.env.NODE_ENV === "development") {
   worker.start();
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <App />
+        <Toaster toastOptions={{ duration: 5000 }} />
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>

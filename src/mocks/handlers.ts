@@ -1,9 +1,19 @@
 import { rest } from "msw";
 
 export const handlers = [
-  rest.post("/login", (req, res, ctx) => {
+  rest.post("/login", async (req, res, ctx) => {
     // Persist user's authentication in the session
-    sessionStorage.setItem("is-authenticated", "true");
+    // sessionStorage.setItem("is-authenticated", "true");
+    const { age } = await req.json()
+
+    if (+age < 18) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          error: 'User not permited'
+        })
+      )
+    }
 
     return res(
       // Respond with a 200 status code
