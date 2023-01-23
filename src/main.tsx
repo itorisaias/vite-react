@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <App />
-        <Toaster toastOptions={{ duration: 5000 }} />
+        <Toaster />
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>

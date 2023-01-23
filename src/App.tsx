@@ -15,7 +15,7 @@ enum GenderEnum {
 
 const inputSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(6),
   age: z.string(),
   gender: z.nativeEnum(GenderEnum),
 });
@@ -26,7 +26,7 @@ function App() {
   // React Query
   const mutation = useMutation(login, {
     onError(error: Error, _variables, _context) {
-      toast.error(`Something went wrong: ${error.message}`)
+      toast.error(`Something went wrong: ${error.message}`, { duration: 5000 })
     },
     onSuccess(_data, _variables, _context) {
       toast.success('Successfull')
@@ -44,10 +44,7 @@ function App() {
   } = useForm<Inputs>({
     resolver: zodResolver(inputSchema),
     defaultValues: {
-      gender: GenderEnum.other,
-      email: 'itor.isaias@gmail.com',
-      age: '3',
-      password: '12345'
+      gender: GenderEnum.other
     },
   });
 

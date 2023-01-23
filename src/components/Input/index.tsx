@@ -38,7 +38,7 @@ export const TextField = ({
           {...props}
         />
       </S.InputWrapper>
-      {!!error && <S.Error>{error}</S.Error>}
+      {!!error && <S.Error id={`invalid_input_${labelFor}`}>{error}</S.Error>}
     </S.Wrapper>
   );
 };
