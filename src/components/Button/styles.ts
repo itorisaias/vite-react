@@ -1,9 +1,10 @@
+import { darken } from "polished";
 import styled, { css, DefaultTheme } from "styled-components";
 import { ButtonProps } from ".";
 
-export type WapperProps = {
+export type WrapperProps = {
   hasIcon: boolean;
-} & Pick<ButtonProps, "size">;
+} & Pick<ButtonProps, "size" | "fullWidth" | "minimal">;
 
 const wrapperModifiers = {
   small: (theme: DefaultTheme) => css`
@@ -28,14 +29,28 @@ const wrapperModifiers = {
       }
     }
   `,
+  fullWidth: () => css`
+    width: 100%;
+  `,
+  minimal: (theme: DefaultTheme) => css`
+    background: none;
+    color: ${theme.colors.primary};
+    &:hover {
+      color: ${darken(0.1, theme.colors.primary)};
+    }
+  `,
 };
 
-export const Wapper = styled.button<WapperProps>`
-  ${({ theme, size, hasIcon }) => css`
+export const Wrapper = styled.button<WrapperProps>`
+  ${({ theme, size, fullWidth, hasIcon, minimal }) => css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #ff5f5f 0%, #f062c0 50%);
+    background: linear-gradient(
+      180deg,
+      ${theme.colors.secondary} 0%,
+      ${theme.colors.primary} 50%
+    );
     color: ${theme.colors.white};
     font-family: ${theme.font.family};
     border: 0;
@@ -45,10 +60,15 @@ export const Wapper = styled.button<WapperProps>`
     text-decoration: none;
 
     &:hover {
-      background: "linear-gradient(180deg, #e35565 0%, #d958a6 50%)";
+      background: "linear-gradient(180deg, ${darken(
+        0.1,
+        theme.colors.secondary
+      )} 0%, ${darken(0.1, theme.colors.primary)} 50%)";
     }
 
     ${!!size && wrapperModifiers[size](theme)}
+    ${!!fullWidth && wrapperModifiers.fullWidth()}
     ${!!hasIcon && wrapperModifiers.withIcon(theme)}
+    ${!!minimal && wrapperModifiers.minimal(theme)}
   `}
 `;

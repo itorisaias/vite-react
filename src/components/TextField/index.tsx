@@ -13,7 +13,7 @@ export type TextFieldProps = {
   register?: UseFormRegister<any>
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export const TextField = ({
+const TextField = ({
   children,
   icon,
   register,
@@ -42,3 +42,5 @@ export const TextField = ({
     </S.Wrapper>
   );
 };
+
+export default TextField
