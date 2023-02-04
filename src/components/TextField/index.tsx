@@ -3,14 +3,14 @@ import { UseFormRegister } from "react-hook-form";
 import * as S from "./styles";
 
 export type TextFieldProps = {
-  label?: string
-  labelFor?: string
-  icon?: React.ReactNode
-  disabled?: boolean
-  iconPosition?: 'rigth' | 'left'
-  initialValue?: string
-  error?: string
-  register?: UseFormRegister<any>
+  label?: string;
+  labelFor?: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  iconPosition?: "rigth" | "left";
+  initialValue?: string;
+  error?: string;
+  register?: UseFormRegister<any>;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const TextField = ({
@@ -19,9 +19,9 @@ export const TextField = ({
   register,
   disabled = false,
   error,
-  label = '',
-  labelFor = '',
-  iconPosition = 'left',
+  label = "",
+  labelFor = "",
+  iconPosition = "left",
   ...props
 }: TextFieldProps) => {
   return (
@@ -42,3 +42,5 @@ export const TextField = ({
     </S.Wrapper>
   );
 };
+
+export default TextField;
