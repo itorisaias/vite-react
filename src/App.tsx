@@ -2,10 +2,9 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUser, login } from "./services";
-import { Button } from "./components/Button";
-import { TextField } from "./components/Input";
+import { login } from "./services";
 import { toast } from "react-hot-toast";
+import { Button, TextField } from "./components";
 
 enum GenderEnum {
   female = "female",

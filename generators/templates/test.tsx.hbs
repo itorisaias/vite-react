@@ -1,0 +1,13 @@
+import { describe, expect, it } from "vitest";
+import { render } from "~test/utils";
+import {{pascalCase name}} from ".";
+
+describe("<{{pascalCase name}} />", () => {
+  it('should render ...', () => {
+    const { container, getByRole } = render(<{{pascalCase name}} />)
+
+    expect(getByRole('heading', { name: /{{pascalCase name}}/i })).toBeInTheDocument()
+
+    expect(container.firstChild).toMatchSnapshot()
+  })
+})
