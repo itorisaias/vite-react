@@ -1,27 +1,27 @@
-import { InputHTMLAttributes } from "react";
-import { UseFormRegister } from "react-hook-form";
-import * as S from "./styles";
+import { InputHTMLAttributes } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import * as S from './styles';
 
 export type TextFieldProps = {
   label?: string;
   labelFor?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
-  iconPosition?: "rigth" | "left";
+  iconPosition?: 'rigth' | 'left';
   initialValue?: string;
   error?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register?: UseFormRegister<any>;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const TextField = ({
-  children,
   icon,
   register,
   disabled = false,
   error,
-  label = "",
-  labelFor = "",
-  iconPosition = "left",
+  label,
+  labelFor = '',
+  iconPosition = 'left',
   ...props
 }: TextFieldProps) => {
   return (

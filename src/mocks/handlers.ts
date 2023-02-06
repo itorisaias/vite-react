@@ -1,18 +1,18 @@
-import { rest } from "msw";
+import { rest } from 'msw';
 
 export const handlers = [
-  rest.post("/login", async (req, res, ctx) => {
+  rest.post('/login', async (req, res, ctx) => {
     // Persist user's authentication in the session
     // sessionStorage.setItem("is-authenticated", "true");
-    const { age } = await req.json()
+    const { age } = await req.json();
 
     if (+age < 18) {
       return res(
         ctx.status(400),
         ctx.json({
-          error: 'User not permited'
+          error: 'User not permited',
         })
-      )
+      );
     }
 
     return res(
@@ -21,7 +21,7 @@ export const handlers = [
     );
   }),
 
-  rest.get("/user", (req, res, ctx) => {
+  rest.get('/user', (req, res, ctx) => {
     // Check if the user is authenticated in this session
     // const isAuthenticated = sessionStorage.getItem('is-authenticated')
 
@@ -40,7 +40,7 @@ export const handlers = [
       ctx.delay(4000),
       ctx.status(200),
       ctx.json({
-        username: "admin",
+        username: 'admin',
       })
     );
   }),

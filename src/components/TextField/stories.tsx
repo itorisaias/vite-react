@@ -1,14 +1,13 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { PersonPinCircle } from "@styled-icons/material-outlined";
-import { TextField } from ".";
+import { Meta, StoryFn } from '@storybook/react';
+import { TextField } from '.';
 
 export default {
   component: TextField,
   args: {
-    label: "E-mail",
-    labelFor: "email",
-    id: "email",
-    placeholder: "jhon.cage@gmail.com",
+    label: 'E-mail',
+    labelFor: 'email',
+    id: 'email',
+    placeholder: 'jhon.cage@gmail.com',
   },
   decorators: [
     (storyFn) => <div style={{ maxWidth: 300, padding: 15 }}>{storyFn()}</div>,
@@ -22,5 +21,5 @@ Default.args = {};
 
 export const withError = Template.bind({});
 withError.args = {
-  error: "Ops...somethind is wrong",
+  error: 'Ops...somethind is wrong',
 };

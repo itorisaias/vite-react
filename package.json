@@ -13,7 +13,27 @@
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "cypress:open": "cypress open",
-    "generate": "npx plop --plopfile generators/plopfile.js"
+    "generate": "npx plop --plopfile generators/plopfile.js",
+    "lint": "npx eslint src --max-warnings=0"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "npm run lint --fix",
+      "prettier --write --ignore-unknown"
+    ]
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
@@ -41,25 +61,26 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "@vitejs/plugin-react-swc": "^3.1.0",
     "@vitest/ui": "^0.28.4",
     "babel-loader": "^8.3.0",
     "cypress": "^12.5.1",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
     "git-cz": "^4.9.0",
+    "husky": "^8.0.3",
     "jsdom": "^21.1.0",
+    "lint-staged": "^13.1.0",
     "msw": "^1.0.0",
     "plop": "^3.1.1",
+    "prettier": "2.8.3",
     "storybook": "^7.0.0-beta.43",
     "typescript": "^4.9.5",
     "vite": "^4.1.1",
     "vitest": "^0.28.4"
-  },
-  "msw": {
-    "workerDirectory": "public"
-  },
-  "config": {
-    "commitizen": {
-      "path": "git-cz"
-    }
   }
 }

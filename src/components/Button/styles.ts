@@ -1,9 +1,9 @@
-import styled, { css, DefaultTheme } from "styled-components";
-import { ButtonProps } from ".";
+import styled, { css, DefaultTheme } from 'styled-components';
+import { ButtonProps } from '.';
 
 export type WapperProps = {
   hasIcon: boolean;
-} & Pick<ButtonProps, "size">;
+} & Pick<ButtonProps, 'size'>;
 
 const wrapperModifiers = {
   small: (theme: DefaultTheme) => css`
@@ -45,7 +45,7 @@ export const Wapper = styled.button<WapperProps>`
     text-decoration: none;
 
     &:hover {
-      background: "linear-gradient(180deg, #e35565 0%, #d958a6 50%)";
+      background: 'linear-gradient(180deg, #e35565 0%, #d958a6 50%)';
     }
 
     ${!!size && wrapperModifiers[size](theme)}

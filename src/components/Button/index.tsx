@@ -1,12 +1,12 @@
-import { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
-import * as S from "./styles";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import * as S from './styles';
 
 type ButtonTypes =
   | AnchorHTMLAttributes<HTMLAnchorElement>
   | ButtonHTMLAttributes<HTMLButtonElement>;
 
 export type ButtonProps = {
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   icon?: React.ReactNode;
   as?: React.ElementType;
 } & ButtonTypes;
@@ -14,7 +14,7 @@ export type ButtonProps = {
 export const Button = ({
   children,
   icon,
-  size = "medium",
+  size = 'medium',
   ...props
 }: ButtonProps) => {
   return (
@@ -24,3 +24,5 @@ export const Button = ({
     </S.Wapper>
   );
 };
+
+export default Button;

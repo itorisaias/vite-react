@@ -1,15 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "./services";
-import { toast } from "react-hot-toast";
-import { Button, TextField } from "./components";
+import { useMutation } from 'react-query';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { login } from './services';
+import { toast } from 'react-hot-toast';
+import { Button, TextField } from './components';
 
 enum GenderEnum {
-  female = "female",
-  male = "male",
-  other = "other",
+  female = 'female',
+  male = 'male',
+  other = 'other',
 }
 
 const inputSchema = z.object({
@@ -24,14 +24,14 @@ type Inputs = z.infer<typeof inputSchema>;
 function App() {
   // React Query
   const mutation = useMutation(login, {
-    onError(error: Error, _variables, _context) {
-      toast.error(`Something went wrong: ${error.message}`, { duration: 5000 })
+    onError(error: ErrorEvent) {
+      toast.error(`Something went wrong: ${error.message}`, { duration: 5000 });
     },
-    onSuccess(_data, _variables, _context) {
-      toast.success('Successfull')
+    onSuccess() {
+      toast.success('Successfull');
     },
-    onMutate(_variables) {
-      toast.remove()
+    onMutate() {
+      toast.remove();
     },
   });
 
@@ -43,7 +43,7 @@ function App() {
   } = useForm<Inputs>({
     resolver: zodResolver(inputSchema),
     defaultValues: {
-      gender: GenderEnum.other
+      gender: GenderEnum.other,
     },
   });
 
