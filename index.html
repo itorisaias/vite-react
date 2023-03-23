@@ -2,44 +2,88 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" integrity="sha512-6lplKUSl86rUVprDIjiW8DuOniNX8UDoRATqZSds/7t6zCQZfaCe3e5zcGaQwxa8Kpn5RTM9Fvl3X2lLV4grPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/filepond/dist/filepond.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <label for="camera">
-      Camera
-      <input id="camera" name="camera" type="file" accept="image/*" capture="camera" />
-    </label>
+    <input type="file" class="my-pond" name="filepond" />
+    <img src="" alt="" id="output" height="300" width="300" />
 
-    <label for="file2">
-      Input simples
-      <input id="file2" name="file2" type="file" accept="image/*" />
-    </label>
- 
-    <img id="image" src="picture.jpg">
-   
-    <div id="root"></div>
-    
+    <!-- include jQuery library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    <!-- include FilePond library -->
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <!-- include FilePond plugins -->
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+    <!-- include FilePond jQuery adapter -->
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+
     <script>
-    import Cropper from 'cropperjs';
+      $(function () {
+        // First register any plugins
+        $.fn.filepond.registerPlugin(
+          FilePondPluginImagePreview,
+          FilePondPluginFileValidateSize,
+          FilePondPluginFileValidateType,
+          FilePondPluginImageExifOrientation,
+          FilePondPluginImageTransform,
+          FilePondPluginImageCrop,
+          FilePondPluginImageResize,
+          FilePondPluginFileMetadata,
+        );
 
-    const image = document.getElementById('image');
-    const cropper = new Cropper(image, {
-      aspectRatio: 16 / 9,
-      crop(event) {
-        console.log(event.detail.x);
-        console.log(event.detail.y);
-        console.log(event.detail.width);
-        console.log(event.detail.height);
-        console.log(event.detail.rotate);
-        console.log(event.detail.scaleX);
-        console.log(event.detail.scaleY);
-      },
-    });
+        $.fn.filepond.setDefaults({
+          maxFileSize: "5MB",
+          // imagePreviewHeight: "423", // 2480 x 3508
+          // imageResizeTargetWidth: 2480,
+          // imageResizeTargetHeight: 3508,
+
+          imageCropAspectRatio: '1:1',
+          imageResizeTargetWidth: 384,
+
+          imageResizeMode: 'cover',
+          imageResizeTargetHeight: 2480,
+          imageResizeTargetWidth: 3508,
+          imageResizeUpscale: false,
+
+          onpreparefile: (file, output) => {
+            console.log({file, output})
+            document.getElementById('output').src = URL.createObjectURL(output)
+          },
+        });
+
+        // Turn input element into a pond
+        $(".my-pond").filepond({
+          allowMultiple: true,
+        });
+
+        // Listen for addfile event
+        // $(".my-pond").on("FilePond:addfile", function (e) {
+        //   console.log("file added event", e);
+        // });
+      });
     </script>
-    
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
