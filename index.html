@@ -56,9 +56,22 @@
 
         $.fn.filepond.setDefaults({
           maxFileSize: "5MB",
+          labelMaxFileSizeExceeded: `Arquivo muito pesado`,
+          labelMaxFileSize: `O tamanho máximo para o arquivo é {filesize}`,
+          labelMaxTotalFileSizeExceeded: `Tamanho total permitido ultrapassado`,
+          labelMaxTotalFileSize: `O tamanho total permitido para os arquivos é: {filesize}`,
           // imagePreviewHeight: "423", // 2480 x 3508
           // imageResizeTargetWidth: 2480,
           // imageResizeTargetHeight: 3508,
+
+          // FilePond Plugin FileValidateType Properties
+          acceptedFileTypes: [`image/png`, `image/jpeg`],
+          labelFileTypeNotAllowed: `Arquivo de tipo inválido`,
+          fileValidateTypeLabelExpectedTypes: `São aceitos arquivos: {allButLastType} ou {lastType}`,
+          fileValidateTypeLabelExpectedTypesMap: {
+              'image/png': `.png`,
+              'image/jpeg': `.jpg`,
+          },
 
           imageCropAspectRatio: '1:1',
           imageResizeTargetWidth: 384,
